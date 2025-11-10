@@ -154,25 +154,9 @@ O painel está dividido em duas seções principais:
 
 ---
 
-## 🧾 Relatório Explicativo
-
-O relatório técnico completo (PDF) está disponível em:  
-[`Relatorio_Observabilidade.pdf`](./Relatorio_Observabilidade.pdf)
-
----
-
-## 📦 Entregáveis
-- Código-fonte da aplicação e scripts SQL  
-- Arquivo `docker-compose.yml` funcional  
-- Painel Grafana exportado (`.json`)  
-- Capturas de tela do dashboard (dados + métricas)  
-- Relatório explicativo (PDF)
-
----
 
 ## ✨ Créditos
 Projeto desenvolvido por **Arthur**  
-Disciplina: *Computação Gráfica e Modelagem – P2 (Observabilidade e Dashboards)*  
 Ferramentas: Node.js, PostgreSQL, Prometheus, Grafana, Docker
 
 ---

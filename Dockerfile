@@ -1,4 +1,4 @@
-# Etapa simples para rodar a aplicação
+
 FROM node:18-alpine
 
 WORKDIR /app

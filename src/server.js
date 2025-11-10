@@ -6,16 +6,16 @@ require('dotenv').config();
 
 const app = express();
 
-// ---- Observabilidade: prom-client ----
-const collectDefaultMetrics = client.collectDefaultMetrics;
-collectDefaultMetrics(); // coleta métricas padrão do Node.js
 
-// Métricas customizadas
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics(); 
+
+
 const httpRequestDuration = new client.Histogram({
   name: 'http_request_duration_seconds',
   help: 'Duração das requisições HTTP em segundos',
   labelNames: ['method', 'route', 'status_code'],
-  buckets: [0.01, 0.05, 0.1, 0.3, 0.5, 1, 2, 5] // buckets de latência
+  buckets: [0.01, 0.05, 0.1, 0.3, 0.5, 1, 2, 5] 
 });
 
 const httpRequestsTotal = new client.Counter({
@@ -24,11 +24,11 @@ const httpRequestsTotal = new client.Counter({
   labelNames: ['method', 'route', 'status_code']
 });
 
-// Middleware para medir duração de requisições
+
 app.use((req, res, next) => {
   const start = process.hrtime.bigint();
   res.on('finish', () => {
-    const diff = Number(process.hrtime.bigint() - start) / 1e9; // segundos
+    const diff = Number(process.hrtime.bigint() - start) / 1e9; 
     httpRequestDuration.labels(req.method, req.route ? req.route.path : req.path, res.statusCode).observe(diff);
     httpRequestsTotal.labels(req.method, req.route ? req.route.path : req.path, res.statusCode).inc();
   });
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(morgan('dev'));
 
-// ---- Banco de dados (PostgreSQL) ----
+
 const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
@@ -56,7 +56,6 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// Endpoint de dados de negócio: lista últimas vendas
 app.get('/vendas', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM vendas ORDER BY created_at DESC LIMIT 50');
@@ -66,7 +65,7 @@ app.get('/vendas', async (req, res) => {
   }
 });
 
-// Endpoint que retorna agregados (para a Parte 2 / Grafana SQL)
+
 app.get('/vendas/por-categoria', async (req, res) => {
   try {
     const { rows } = await pool.query(`
@@ -81,7 +80,7 @@ app.get('/vendas/por-categoria', async (req, res) => {
   }
 });
 
-// ---- Endpoint /metrics para Prometheus ----
+
 app.get(process.env.METRICS_ENDPOINT || '/metrics', async (req, res) => {
   try {
     res.set('Content-Type', client.register.contentType);
