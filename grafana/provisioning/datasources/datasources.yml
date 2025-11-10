@@ -1,0 +1,25 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus (App)
+    type: prometheus
+    uid: PROMAPPDS
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: false
+    jsonData:
+      httpMethod: GET
+
+  - name: PostgreSQL (Vendas)
+    type: postgres
+    uid: PGVENDASDS
+    access: proxy
+    url: postgres:5432
+    user: postgres
+    secureJsonData:
+      password: postgres
+    jsonData:
+      database: observa_db
+      sslmode: "disable"
+      postgresVersion: 1600
+      timescaledb: false

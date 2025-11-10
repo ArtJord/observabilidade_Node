@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'Dashboards de Observabilidade e Dados'
+    orgId: 1
+    folder: 'Observabilidade - App'
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/local-dashboards

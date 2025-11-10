@@ -1,0 +1,62 @@
+services:
+  app:
+    build: .
+    container_name: app-observa
+    env_file: .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - observanet
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: pg-observa
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: observa_db
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - observanet
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: prom-observa
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - app
+    networks:
+      - observanet
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: gf-observa
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+      - postgres
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/etc/grafana/provisioning/local-dashboards:ro
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_DEFAULT_THEME=light
+    networks:
+      - observanet
+
+networks:
+  observanet:
+
+volumes:
+  pgdata:

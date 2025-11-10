@@ -1,0 +1,22 @@
+-- Inserção de pelo menos 20 registros
+INSERT INTO vendas (categoria, valor, descricao) VALUES
+('Laticínios', 120.50, 'Queijo Minas'),
+('Laticínios', 89.90, 'Leite integral 50L'),
+('Animais', 1350.00, 'Venda de novilha A'),
+('Animais', 980.00, 'Venda de bezerro B'),
+('Derivados', 210.00, 'Iogurtes variados'),
+('Serviços', 350.00, 'Transporte de carga'),
+('Subsídios', 500.00, 'Subsídio estadual'),
+('Outros', 75.00, 'Venda de caixas'),
+('Laticínios', 240.00, 'Manteiga artesanal'),
+('Derivados', 160.00, 'Doce de leite 10kg'),
+('Serviços', 420.00, 'Ordenha terceirizada'),
+('Animais', 1150.00, 'Venda de novilha C'),
+('Outros', 95.00, 'Embalagens premium'),
+('Laticínios', 300.00, 'Queijo Prato'),
+('Derivados', 190.00, 'Queijadinha 5kg'),
+('Serviços', 250.00, 'Limpeza de tanque'),
+('Subsídios', 450.00, 'Subsídio federal'),
+('Animais', 1500.00, 'Venda de touro jovem'),
+('Laticínios', 110.00, 'Requeijão caseiro'),
+('Outros', 60.00, 'Caixas plásticas');
